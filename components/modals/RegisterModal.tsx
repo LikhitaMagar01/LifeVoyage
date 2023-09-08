@@ -3,6 +3,9 @@ import Input from "../components/Input"
 import Modal from "../components/Modal"
 import useLoginModal from "@/hooks/useLoginModal"
 import useRegisterModal from "@/hooks/useRegisterModal"
+import axios from "axios"
+import { toast } from "react-hot-toast"
+import { signIn } from "next-auth/react"
 
 const RegisterModal = () =>{
     const loginModal = useLoginModal()
@@ -17,15 +20,22 @@ const RegisterModal = () =>{
     const onSubmit = useCallback(async()=> {
         try{
             setIsLoading(true)
-            // todo add register and login
+            await axios.post('/api/register', {
+                email, password, username, name
+            })
+            toast.success('Account created.')
+            signIn('credentials', {
+                email,
+                password
+            });
             registerModal.onClose()
         }
         catch(error){
-            console.log(error)
+            toast.error('Something went wrong.')
         }finally{
             setIsLoading(false)
         }
-    }, [RegisterModal])
+    }, [RegisterModal, email, password, username, name])
 
     const onToggle = useCallback(()=>{
         if(isLoading){
@@ -40,7 +50,7 @@ const RegisterModal = () =>{
             <Input placeholder="Email" onChange={(e)=> setEmail(e.target.value)} value={email} disabled={isLoading} />
             <Input placeholder="Name" onChange={(e)=> setName(e.target.value)} value={name} disabled={isLoading} />
             <Input placeholder="Username" onChange={(e)=> setUserName(e.target.value)} value={username} disabled={isLoading} />
-            <Input placeholder="Password" onChange={(e)=> setPassword(e.target.value)} value={password} disabled={isLoading} />
+            <Input placeholder="Password" type="password" onChange={(e)=> setPassword(e.target.value)} value={password} disabled={isLoading} />
         </div>
     )
     const footerContent = (

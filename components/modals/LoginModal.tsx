@@ -3,6 +3,8 @@ import useRegisterModal from "@/hooks/useRegisterModal"
 import { useCallback, useState } from "react"
 import Input from "../components/Input"
 import Modal from "../components/Modal"
+import { signIn } from "next-auth/react"
+import { toast } from "react-hot-toast"
 
 const LoginModal = () =>{
     const loginModal = useLoginModal()
@@ -15,15 +17,19 @@ const LoginModal = () =>{
     const onSubmit = useCallback(async()=> {
         try{
             setIsLoading(true)
-            // todo add login
+            await signIn('credentials', {
+                email,
+                password
+            })
+            toast.success('Log in successfully.')
             loginModal.onClose()
         }
         catch(error){
-            console.log(error)
+            toast.error('Something went wrong.')
         }finally{
             setIsLoading(false)
         }
-    }, [LoginModal])
+    }, [LoginModal, email, password])
 
     const onToggle = useCallback(()=>{
         if(isLoading){
@@ -36,7 +42,7 @@ const LoginModal = () =>{
     const bodyContent = (
         <div className="flex flex-col gap-4">
             <Input placeholder="Email" onChange={(e)=> setEmail(e.target.value)} value={email} disabled={isLoading} />
-            <Input placeholder="Password" onChange={(e)=> setPassword(e.target.value)} value={password} disabled={isLoading} />
+            <Input placeholder="Password" type="password" onChange={(e)=> setPassword(e.target.value)} value={password} disabled={isLoading} />
         </div>
     )
 
