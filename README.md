@@ -61,3 +61,6 @@ npm install axios
 
 notification toast:
 npm install react-hot-toast
+
+spinners:
+npm install react-spinners
