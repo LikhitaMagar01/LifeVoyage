@@ -36,3 +36,28 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+state management:
+zustand
+
+prisma:
+npm install -D prisma
+npx prisma init
+npm install @prisma/client
+
+bcrypt:
+npm install bcrypt
+npm instal -D @types/bcrypt
+
+next-auth:
+npm install next-auth
+npm install @next-auth/prisma-adapter
+
+swr: cache
+npm install swr
+
+axios:
+npm install axios
+
+notification toast:
+npm install react-hot-toast
